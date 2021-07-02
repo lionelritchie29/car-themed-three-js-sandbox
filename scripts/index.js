@@ -3,6 +3,8 @@ import { OrbitControls } from './threejs/examples/jsm/controls/OrbitControls.js'
 import GLOBALS from './globals/global.js';
 import ModelHelper from './classes/ModelHelper.js';
 import LightHelper from './classes/LightHelper.js';
+import SkyboxHelper from './classes/SkyboxHelper.js';
+import GeometryHelper from './classes/GeometryHelper.js';
 
 const load = async () => {
   console.log("Loaded succesfully");
@@ -10,7 +12,11 @@ const load = async () => {
   const {scene, orbitCamera, renderer} = init();
   await setModel(scene);
   setLight(scene);
-
+  SkyboxHelper.loadAndSetSkybox(scene);
+  GeometryHelper.createAndAddFloor(scene);
+  GeometryHelper.createAndAddSun(scene);
+  
+  
   const animate = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, orbitCamera);
@@ -47,13 +53,20 @@ const initRenderer = () => {
 
 const setModel = async (scene) => {
   const car = await ModelHelper.LoadCar();
-  const crossingRoad = await ModelHelper.LoadCrossingRoad();
+  const crossingRoad1 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, 0));
+  const crossingRoad2 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, -110));
+  const crossingRoad3 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, 110));
+
+  
   scene.add(car);
-  scene.add(crossingRoad);
+  scene.add(crossingRoad1);
+  scene.add(crossingRoad2);
+  scene.add(crossingRoad3);
 }
 
 const setLight = (scene) => {
   LightHelper.addAmbientLight(scene);
+  LightHelper.addPointLight(scene);
 }
 
 await load();

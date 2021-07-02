@@ -8,7 +8,7 @@ class ModelHelper {
     return new Promise((resolve, reject) => {
       loader.load(carModelPath, (gltf) => {
         const car = gltf.scene; 
-        car.scale.set(0.005, 0.005, 0.005);
+        car.scale.set(0.02, 0.02, 0.02);
         car.rotateY(Math.PI / 2);
         car.position.set(0, 0.4, 0)
         resolve(gltf.scene);
@@ -16,13 +16,16 @@ class ModelHelper {
     })
   }
 
-  static LoadCrossingRoad = async () => {
+  static LoadCrossingRoad = async (pos) => {
     const roadModelPath = '../../assets/models/road_crossing/scene.gltf';
     const loader = new GLTFLoader();
 
     return new Promise((resolve, reject) => {
       loader.load(roadModelPath, (gltf) => {
-        // gltf.scene.scale.set(0.01, 0.01, 0.01);
+        const road = gltf.scene; 
+        road.scale.set(0.2, 0.2, 0.2);
+        road.position.copy(pos);
+
         resolve(gltf.scene);
       }, () => {console.log('road model succesfully loaded')}, (err) => {reject(err)});
     })
