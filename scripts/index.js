@@ -19,6 +19,22 @@ const load = async () => {
 
   GeometryHelper.createAndAddFloor(scene);
   GeometryHelper.createAndAddSun(scene, pointLight);
+
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 0), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 50), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, -50), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 75), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -75), new THREE.Vector3(10, 35, 20));
+
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 0), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 50), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, -50), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 75), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -75), new THREE.Vector3(10, 35, 20));
   
   handleKeyboardEvent();
 
@@ -65,7 +81,9 @@ const initCamera = (renderer) => {
 }
 
 const initRenderer = () => {
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.shadowMap.enabled = true;
+  // renderer.shadowMap = THREE.PCFShadowMap;
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -86,9 +104,9 @@ const setCamera = (car, fpsControl, tpsControl, thirdPersonCamera, firstPersonCa
 
 const setModel = async (scene) => {
   const car = await ModelHelper.LoadCar();
-  const crossingRoad1 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, 0));
-  const crossingRoad2 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, -110));
-  const crossingRoad3 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(0, 0, 110));
+  const crossingRoad1 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(10, 0, 0));
+  const crossingRoad2 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(10, 0, -110));
+  const crossingRoad3 = await ModelHelper.LoadCrossingRoad(new THREE.Vector3(10, 0, 110));
 
   scene.add(car);
   scene.add(crossingRoad1);

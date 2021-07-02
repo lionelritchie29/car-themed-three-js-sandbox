@@ -9,6 +9,7 @@ class LightHelper {
 
   static addPointLight = (scene) => {
     const pointLight = new THREE.PointLight(0xffffff, 2.5);
+    pointLight.castShadow = true;
     scene.add(pointLight);
     return pointLight;
   }

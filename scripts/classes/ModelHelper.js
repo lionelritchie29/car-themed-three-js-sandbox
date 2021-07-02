@@ -31,6 +31,12 @@ class ModelHelper {
     return new Promise((resolve, reject) => {
       loader.load(roadModelPath, (gltf) => {
         const road = gltf.scene; 
+
+        road.traverse(node => {
+            node.castShadow = true;
+            node.receiveShadow = true;
+        })
+
         road.scale.set(0.2, 0.2, 0.2);
         road.position.copy(pos);
 
