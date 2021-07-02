@@ -20,7 +20,7 @@ class SkyboxHelper {
     materials.forEach(mat => mat.side = THREE.BackSide);
     const geometry = new THREE.BoxGeometry(200, 200, 200);
     const skybox = new THREE.Mesh(geometry, materials);
-    skybox.position.set(0, 5, 0);
+    skybox.position.set(0, 50, 0);
     scene.add(skybox);
   }
 }

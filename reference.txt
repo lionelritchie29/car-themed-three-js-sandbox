@@ -1,2 +1,4 @@
 Low Poly Truck Model: https://sketchfab.com/3d-models/low-poly-truck-car-drifter-f3750246b6564607afbefc61cb1683b1#download
 Crossing Road: https://sketchfab.com/3d-models/road-crossing-ad4b711105ad4b608a3e4adc93cbd70c#download 
+Grass Texture: http://agroteknologi.faperta.unej.ac.id/wp-content/uploads/sites/5/2017/11/407666.jpg
+Skybox: https://opengameart.org/content/miramar-skybox

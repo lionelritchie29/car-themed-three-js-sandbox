@@ -8,9 +8,17 @@ class ModelHelper {
     return new Promise((resolve, reject) => {
       loader.load(carModelPath, (gltf) => {
         const car = gltf.scene; 
+
+        car.traverse(node => {
+          if (node.isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        })
+
         car.scale.set(0.02, 0.02, 0.02);
         car.rotateY(Math.PI / 2);
-        car.position.set(0, 0.4, 0)
+        car.position.set(0, 0.75, 0)
         resolve(gltf.scene);
       }, () => {console.log('car model succesfully loaded')}, (err) => {reject(err)});
     })
