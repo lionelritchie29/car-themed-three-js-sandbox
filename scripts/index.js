@@ -35,6 +35,12 @@ const load = async () => {
   GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, -50), new THREE.Vector3(10, 35, 20));
   GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 75), new THREE.Vector3(10, 35, 20));
   GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -75), new THREE.Vector3(10, 35, 20));
+
+  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, -97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, -97.5));
+
+  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, 97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, 97.5));
   
   handleKeyboardEvent();
 

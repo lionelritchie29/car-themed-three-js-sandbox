@@ -42,6 +42,27 @@ class GeometryHelper {
     scene.add(building);
     return building;
   }
+
+  static createAndAddTorus = (scene, pos) => {
+    const geometry = new THREE.TorusGeometry(25, 1.5, 8, 48);
+    const material  = new THREE.MeshPhongMaterial({color: 0x34362B});
+    const torus = new THREE.Mesh(geometry, material);
+    torus.position.copy(pos);
+    scene.add(torus);
+    return torus;
+  }
+
+  static createAndAddTunnel = (scene, pos) => {
+    const geometry = new THREE.CircleGeometry(25, 16);
+    const texture = new THREE.TextureLoader().load('../../assets/textures/tunnel.jpg');
+    texture.offset.y = -0.4;
+    const material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
+    const circle = new THREE.Mesh(geometry, material);
+
+    circle.position.copy(pos);
+    scene.add(circle);
+    return circle;
+  }
 }
 
 export default GeometryHelper;
