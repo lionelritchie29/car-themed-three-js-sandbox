@@ -3,3 +3,6 @@ Crossing Road: https://sketchfab.com/3d-models/road-crossing-ad4b711105ad4b608a3
 Grass Texture: http://agroteknologi.faperta.unej.ac.id/wp-content/uploads/sites/5/2017/11/407666.jpg
 Skybox: https://opengameart.org/content/miramar-skybox
 Tunnel: https://d34urnl45u363e.cloudfront.net/store/mediaobject/10485/image/large-eef1853ea19f2de6426d16b6b43c9de5.jpg 
+Tunnel2: https://blenderartists.org/uploads/default/original/3X/f/a/fa9a52c505577c483e6e3c0d3b5171fc7636cc16.jpg
+Tunnel3: https://i.stack.imgur.com/JVemE.jpg 
+Buildings: https://www.sketchuptextureclub.com/textures/architecture/buildings/residential-buildings 
