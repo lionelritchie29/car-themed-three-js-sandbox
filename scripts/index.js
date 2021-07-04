@@ -6,6 +6,7 @@ import ModelHelper from './classes/ModelHelper.js';
 import LightHelper from './classes/LightHelper.js';
 import SkyboxHelper from './classes/SkyboxHelper.js';
 import GeometryHelper from './classes/GeometryHelper.js';
+import RaycastHelper from './classes/RaycastHelper.js';
 
 let {isMovingForward, isFirstPerson, isMovingBackward, isRotateLeft, isRotateRight, velocity, ROTATE_RAD} = CAR_PROPERTIES;
 
@@ -13,6 +14,7 @@ const load = async () => {
   const {scene, thirdPersonCamera, fpsControl, tpsControl, firstPersonCamera, renderer} = init();
   const {car} = await setModel(scene);
   setCamera(car, fpsControl, tpsControl, thirdPersonCamera, firstPersonCamera);
+  const { FIRST_TUNNEL_NAME, SECOND_TUNNEL_NAME } = GLOBALS;
 
   const {pointLight} = setLight(scene);
   SkyboxHelper.loadAndSetSkybox(scene);
@@ -37,15 +39,41 @@ const load = async () => {
   GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -75), new THREE.Vector3(10, 35, 20));
 
   GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, -97.5));
-  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, -97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, -97.5), FIRST_TUNNEL_NAME);
 
   GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, 97.5));
-  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, 97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, 97.5), SECOND_TUNNEL_NAME);
   
   handleKeyboardEvent();
 
+  const {mouseRaycast, raycaster} = RaycastHelper.init();
+  document.addEventListener('pointerdown', (e) => {
+    mouseRaycast.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+	  mouseRaycast.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+    isClicked = true;
+  })
+
+  console.log(mouseRaycast);
+
+  let isClicked = false;
+
   const animate = () => {
     requestAnimationFrame(animate);
+
+    if (isClicked) {
+      raycaster.setFromCamera(mouseRaycast, thirdPersonCamera);
+
+      const intersects = raycaster.intersectObjects(scene.children);
+
+      intersects.forEach(item =>  {
+        if (item.object.name === FIRST_TUNNEL_NAME || item.object.name === SECOND_TUNNEL_NAME) {
+          console.log(item);
+          item.object.material.map = GeometryHelper.getRandomTunnelTexture(item);
+          item.object.material.needsUpdate = true;
+        }
+      });
+      isClicked = false;
+    }
 
     if (isFirstPerson) {
       renderer.render(scene, firstPersonCamera);

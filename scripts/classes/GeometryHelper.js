@@ -52,16 +52,31 @@ class GeometryHelper {
     return torus;
   }
 
-  static createAndAddTunnel = (scene, pos) => {
+  static createAndAddTunnel = (scene, pos, name) => {
     const geometry = new THREE.CircleGeometry(25, 16);
     const texture = new THREE.TextureLoader().load('../../assets/textures/tunnel.jpg');
     texture.offset.y = -0.4;
     const material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
     const circle = new THREE.Mesh(geometry, material);
+    circle.name  = name;
 
     circle.position.copy(pos);
     scene.add(circle);
     return circle;
+  }
+
+  static getRandomTunnelTexture(item) {
+    const textures = ["tunnel.jpg", "tunnel2.jpg", "tunnel3.jpg"];
+
+    let randomTexture = null;
+    do {
+      randomTexture = textures[Math.floor(Math.random()*textures.length)];
+    }
+    while (item.object.material.map.image.currentSrc.includes(randomTexture));
+
+    const texture = new THREE.TextureLoader().load('../../assets/textures/' + randomTexture);
+    texture.offset.y = -0.4;
+    return texture;
   }
 }
 
