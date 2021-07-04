@@ -8,42 +8,18 @@ import SkyboxHelper from './classes/SkyboxHelper.js';
 import GeometryHelper from './classes/GeometryHelper.js';
 import RaycastHelper from './classes/RaycastHelper.js';
 
+const { FIRST_TUNNEL_NAME, SECOND_TUNNEL_NAME } = GLOBALS;
 let {isMovingForward, isFirstPerson, isMovingBackward, isRotateLeft, isRotateRight, velocity, ROTATE_RAD} = CAR_PROPERTIES;
+let isClicked = false;
 
 const load = async () => {
   const {scene, thirdPersonCamera, fpsControl, tpsControl, firstPersonCamera, renderer} = init();
   const {car} = await setModel(scene);
-  setCamera(car, fpsControl, tpsControl, thirdPersonCamera, firstPersonCamera);
-  const { FIRST_TUNNEL_NAME, SECOND_TUNNEL_NAME } = GLOBALS;
-
   const {pointLight} = setLight(scene);
-  SkyboxHelper.loadAndSetSkybox(scene);
-
-  GeometryHelper.createAndAddFloor(scene);
-  GeometryHelper.createAndAddSun(scene, pointLight);
-
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 0), new THREE.Vector3(10, 25, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 25), new THREE.Vector3(10, 30, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -25), new THREE.Vector3(10, 30, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 50), new THREE.Vector3(10, 25, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, -50), new THREE.Vector3(10, 35, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 75), new THREE.Vector3(10, 35, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -75), new THREE.Vector3(10, 35, 20));
-
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 0), new THREE.Vector3(10, 25, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 25), new THREE.Vector3(10, 30, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -25), new THREE.Vector3(10, 30, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 50), new THREE.Vector3(10, 25, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, -50), new THREE.Vector3(10, 35, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 75), new THREE.Vector3(10, 35, 20));
-  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -75), new THREE.Vector3(10, 35, 20));
-
-  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, -97.5));
-  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, -97.5), FIRST_TUNNEL_NAME);
-
-  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, 97.5));
-  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, 97.5), SECOND_TUNNEL_NAME);
   
+  setCamera(car, fpsControl, tpsControl, thirdPersonCamera, firstPersonCamera);
+  SkyboxHelper.loadAndSetSkybox(scene, pointLight);
+  setGeometry(scene, pointLight);
   handleKeyboardEvent();
 
   const {mouseRaycast, raycaster} = RaycastHelper.init();
@@ -52,10 +28,6 @@ const load = async () => {
 	  mouseRaycast.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
     isClicked = true;
   })
-
-  console.log(mouseRaycast);
-
-  let isClicked = false;
 
   const animate = () => {
     requestAnimationFrame(animate);
@@ -67,7 +39,6 @@ const load = async () => {
 
       intersects.forEach(item =>  {
         if (item.object.name === FIRST_TUNNEL_NAME || item.object.name === SECOND_TUNNEL_NAME) {
-          console.log(item);
           item.object.material.map = GeometryHelper.getRandomTunnelTexture(item);
           item.object.material.needsUpdate = true;
         }
@@ -154,6 +125,33 @@ const setLight = (scene) => {
   const ambientLight = LightHelper.addAmbientLight(scene);
   const pointLight = LightHelper.addPointLight(scene);
   return {ambientLight, pointLight};
+}
+
+const setGeometry = (scene, pointLight) => {
+  GeometryHelper.createAndAddFloor(scene);
+  GeometryHelper.createAndAddSun(scene, pointLight);
+
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 0), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, 50), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 10, -50), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, 75), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(-30, 15, -75), new THREE.Vector3(10, 35, 20));
+
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 0), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -25), new THREE.Vector3(10, 30, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, 50), new THREE.Vector3(10, 25, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 10, -50), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, 75), new THREE.Vector3(10, 35, 20));
+  GeometryHelper.createAndAddBuilding(scene, new THREE.Vector3(50, 15, -75), new THREE.Vector3(10, 35, 20));
+
+  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, -97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, -97.5), FIRST_TUNNEL_NAME);
+
+  GeometryHelper.createAndAddTorus(scene, new THREE.Vector3(10, 0, 97.5));
+  GeometryHelper.createAndAddTunnel(scene, new THREE.Vector3(10, 0, 97.5), SECOND_TUNNEL_NAME);
 }
 
 const handleKeyboardEvent = () => {
