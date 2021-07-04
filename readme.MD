@@ -1,47 +1,47 @@
-You need to include threejs library to the script folder and run it using live server for this project to run.
+**You need to include threejs library to the script folder and run it using live server for this project to run.**
   
-#### Screenshots  
+#### Screenshots
 ![](Screenshot_1.jpg)  
 
 ![](Screenshot_2.jpg)  
 
 ![](Screenshot_3.jpg)  
 
-#### Environment:  
+#### Environment:
 -> Car in a town  
   
-#### Geometries  
+#### Geometries
 -> Torus for tunnel outer  
 -> Circle for tunnel  
 -> Cube for building  
 -> Plane for floor  
 -> Sphere for sun  
   
-#### Materials  
+#### Materials
 -> MeshBasicMaterial -> sun, tunnel, skybox  
 -> MeshPhongMaterial -> tunnel outer (torus)  
 -> MeshLambertMaterial -> building, floor  
   
-#### Lights  
+#### Lights
 -> Ambient Light  
 -> Point Light  
   
-#### Shadow 
+#### Shadow
 ok  
   
-#### Camera  
+#### Camera
 -> 2 Perspective camera (switchable)  
   
-#### Raycast  
+#### Raycast
 -> when the tunnel is clicked, the tunnel image will change  
   
-#### 3D Models  
+#### 3D Models
 -> truck  
 -> road  
   
-#### Skybox 
+#### Skybox
 ok    
   
-#### Additional Functionality  
+#### Additional Functionality
 -> W A S D to Move  
 -> C to change camera  
